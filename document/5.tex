@@ -1,0 +1,187 @@
+\documentclass[12pt, english]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% margin %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=1in,
+ top=0.9in,
+ right=1in,
+ bottom=2in,
+ }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% page no. %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\textit{\thepage}}
+\setlength{\headheight}{65pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% idk-needed %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amsthm,amssymb,amsfonts, enumitem, color, comment, graphicx, environ, lipsum, accsupp}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% code and color %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{spverbatim}
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{bluegrey}{RGB}{0, 0, 200}
+\lstset{
+        framexleftmargin=0pt,
+        frame=shadowbox,
+        rulesepcolor=\color{gray},
+        xleftmargin=30pt,
+        xrightmargin=30pt,
+        breaklines=true,
+        basicstyle=\ttfamily,
+        showstringspaces=false,
+        escapeinside={(*@}{@*)},
+        }
+\def\speciallstcolor{\begingroup\color{blue}}
+\def\endspeciallstcolor{\endgroup}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% heading %%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\thesection{\color{blue}\arabic{section}}
+\newcommand{\mysection}[2]{\setcounter{section}{#1}\addtocounter{section}{-1}\section{#2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% both side indent %%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{myindent}
+{\par\leftskip25pt\relax\rightskip25pt\relax}
+{\par\leftskip0cm\relax\rightskip0cm\relax}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% type ^ and \ %%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\power}{$^\wedge$}
+\newcommand{\backs}{\textbackslash} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% document info %%%%%%%%%%%%%%%%%%%%%%
+\lhead{Arav Sarma \\ 15193845}  %replace with your name
+\rhead{Homework \textcolor{blue}{5} \\ 2025 Speech Processing}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% begin %%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
+% section _______________________________________________
+\mysection{5}{Duration}
+\vspace{10pt}
+% -__-__-__-__-__-__-__-__-__-__-__-__-__-__-__-__-__-__-
+
+% //////////////////////////////////////////////////////
+\subsection*{\emph{1.} Semi-automated measurement of duration} \vspace{15pt}
+
+\begin{itemize}
+    \item \textbf{Change script to only include intervals with text} \vspace{5pt}
+\begin{lstlisting}[xleftmargin=0pt,]
+textgrid = Read from file: "counting.TextGrid"
+numberOfIntervals = Get number of intervals: 1
+writeInfoLine: "Texts:"
+for interval to numberOfIntervals
+	word$ = Get label of interval: 1, interval
+	(*@\aftergroup\speciallstcolor@*)if word$ <> ""(*@\aftergroup\endspeciallstcolor@*)
+		appendInfoLine: "Interval ", interval, ": ", word$
+        (*@\aftergroup\speciallstcolor@*)endif(*@\aftergroup\endspeciallstcolor@*)
+endfor
+\end{lstlisting} \vspace{10pt}
+
+    \item \textbf{Change script so TextGrid object is throw away at end} \vspace{5pt}
+\begin{lstlisting}[xleftmargin=0pt]
+textgrid = Read from file: "counting.TextGrid"
+numberOfIntervals = Get number of intervals: 1
+writeInfoLine: "Texts:"
+for interval to numberOfIntervals
+	word$ = Get label of interval: 1, interval
+	if word$ <> ""
+		appendInfoLine: "Interval ", interval, ": ", word$
+        endif
+endfor
+(*@\aftergroup\speciallstcolor@*)removeObject: textgrid(*@\aftergroup\endspeciallstcolor@*)
+\end{lstlisting} \vspace{10pt}
+
+    \item \textbf{Change script to include start and end times for intervals} \vspace{5pt}
+\begin{lstlisting}[xleftmargin=0pt]
+textgrid = Read from file: "counting.TextGrid"
+numberOfIntervals = Get number of intervals: 1
+writeInfoLine: "Texts:"(*@\aftergroup\speciallstcolor@*), newline$(*@\aftergroup\endspeciallstcolor@*)
+for interval to numberOfIntervals
+	word$ = Get label of interval: 1, interval
+	start = Get start time of interval: 1, interval
+	end = Get end time of interval: 1, interval
+	if word$ <> ""
+		appendInfoLine: "Interval ", interval, ": ", word$
+		(*@\aftergroup\speciallstcolor@*)appendInfoLine: "Times (s): ", start, " - ", end, newline$(*@\aftergroup\endspeciallstcolor@*)
+	endif
+endfor
+removeObject: textgrid
+\end{lstlisting} \vspace{10pt}
+
+    \item \textbf{Change script to duration of intervals} \vspace{5pt}
+\begin{lstlisting}[xleftmargin=0pt]
+textgrid = Read from file: "counting.TextGrid"
+numberOfIntervals = Get number of intervals: 1
+writeInfoLine: "Texts:"(*@\aftergroup\speciallstcolor@*), newline$(*@\aftergroup\endspeciallstcolor@*)
+for interval to numberOfIntervals
+	word$ = Get label of interval: 1, interval
+	start = Get start time of interval: 1, interval
+	end = Get end time of interval: 1, interval
+    (*@\aftergroup\speciallstcolor@*)dur = end - start(*@\aftergroup\endspeciallstcolor@*)
+	if word$ <> ""
+		appendInfoLine: "Interval ", interval, ": ", word$
+		appendInfoLine: "Times (s): ", start, " - ", end
+        (*@\aftergroup\speciallstcolor@*)appendInfoLine; "Duration (s): ", dur, newline$(*@\aftergroup\endspeciallstcolor@*)
+	endif
+endfor
+removeObject: textgrid
+\end{lstlisting} \vspace{10pt}
+
+\end{itemize}
+
+% //////////////////////////////////////////////////////
+
+% \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\subsection*{\emph{2.} Creating a vowel duration continuum}
+
+\begin{itemize}
+    \item \textbf{Boundary} \par
+    kiba1-2: perceived as short \\
+    kiba3: perceived long / inbetween \\
+    ki-ba1-3: perceived as long \\
+    Boundary somewhere around 0.055s (or higher). Not enough tokens to determine boundary for long-short continuum.
+\end{itemize}
+
+% \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+% ><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+\subsection*{\emph{6.} Duration in the acoustic continua of your experiment}
+\vspace{10pt}
+
+\begin{itemize}
+    \item \textbf{General research question:} \par
+    \textcolor{gray}{Location of phoneme boundary as a function of orthographic context (and exopure/familiarity with orthography of certain language(s))} \par
+    \textbf{Location of phoneme boundary as a function of lexical context (word-nonword)}
+    \item \textbf{\textcolor{gray}{Addition:}} \par
+    \textcolor{gray}{L2 lexical knowledge context}
+    \item \textbf{Specific research question:} \par
+    \textcolor{gray}{My idea is to take both orthography and non-native lexical knowledge as a coupled effect on phonological categorisation. Preliminary thoughts on operationalising this question: looking at phonemic boundary between voiced-plain-aspirated, aspirated-fricative continua for L2 English speakers from Assam (or L1 Assamese speaking). Onset stop contrast on L2 variety is through voicing unlike aspiration in L1 English for Assamese (voicing+aspiration for Boro), Orthograhpic <b>, <d>, <g> are percieved as voiced like other Indian Englishes. This perception gets carried over even when exposed to L1 English. Questions: How much closure devoicing / afterburst duration can be blocked off during phoneme categorisation for a voicing / plain percept (how strong would lexical effect be on a word like `ban' / `pan', and also orthographic; eg: when shown <pan> / <phan or fan>)?} \par
+    How does presence/absence of a lexical item effect categorisation of aspirated-breathy laryngeal contrast? Unlike the voicing or aspirated contrasts where boundary can be tested with VOT continua, the aspirated-breathy contrast would require manipulation of cues like turbulence quality and also pitch on following vowel (as the breathy and aspirated categories has been observed to effect pitch across languages; tonogenesis in Rohingya, Punjabi, tone-depressing effect in Southeastern Bantu, adaptation of indic loans with breathy in Thai). The study will look at lexical effect across this contrast for L1 Assamese speakers from Guwahati.       
+    \item \textbf{Participants} \par
+    Recruited: \char`\~ 5 \\
+    Completed: 0 \par
+    Participants are going to be tested online using Zoom online meetings, and recruited through author's contacts, and likely by reaching out to Assam/Northeast related online forums like on reddit. The plan is to have non-native English speakers ideally all from Guwahati with same L1, this is to neutralise individual factors like regional variation, exposure to English. A different experiment setup can be by using a qualtrics form along with online meet, so the participants have more autonomy with the test and excess to stimuli on their device while also making it easier to see if they are in a quiet environment. \par
+    \item \textbf{Continua}
+    Acoustic continua from [bha] to [pha]: 1st context is with following syllable [ŋa] (word to nonword). 2nd context is with following syllable [ki] (nonword to word). \\
+    Continua from [dh] to [th]ː 1st context is with nucleus [ue] (word to nonword). 2nd context is with nucleus [io] (nonword to word). \par
+    \item \textbf{Duration} \par
+    The breathy-aspirated contrast can involve duration of voicing, however the breathy phonation is not really the same as voicing of a vowel (vocal folds in breathy are not as / or not completely close together as in modal voice). Therefore it is amount of voicing (closeness of vocal folds) during the afterburst which should be a contrastive cue.
+\end{itemize}
+% ><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+
+%wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+\end{document}

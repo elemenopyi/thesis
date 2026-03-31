@@ -1,0 +1,159 @@
+\documentclass[12pt, english]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% margin %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=1in,
+ top=0.9in,
+ right=1in,
+ bottom=2in,
+ }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% page no. %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\textit{\thepage}}
+\setlength{\headheight}{65pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% idk-needed %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amsthm,amssymb,amsfonts, enumitem, color, comment, graphicx, environ, lipsum}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% code and color %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{spverbatim}
+\usepackage{xcolor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% heading %%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\thesection{\color{blue}\arabic{section}}
+\newcommand{\mysection}[2]{\setcounter{section}{#1}\addtocounter{section}{-1}\section{#2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% both side indent %%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{myindent}
+{\par\leftskip25pt\relax\rightskip53.4cm\relax}
+{\par\leftskip0cm\relax\rightskip0cm\relax}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% type ^ %%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\power}{$^\wedge$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% document info %%%%%%%%%%%%%%%%%%%%%%
+\lhead{Arav Sarma \\ 15193845}  %replace with your name
+\rhead{Homework \textcolor{blue}{1} \\ 2025 Speech Processing}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% begin %%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
+% section _______________________________________________
+\mysection{1}{Programming: expressions, variables}
+\vspace{10pt}
+% -__-__-__-__-__-__-__-__-__-__-__-__-__-__-__-__-__-__-
+
+% //////////////////////////////////////////////////////
+\subsection*{\emph{a. Arithmatic by computer}} 
+\vspace{10pt}
+
+\begin{enumerate}
+  \item[1.] 6-5+1 → (6-5)+1 \par
+  \item[2.] 4-3*5 → 4-(3*5) \par
+  \item[3.] 6/3*4 → (6/3)*4 \par
+  \item[4.] 4*6/3 → (4*6)/3 \par
+  \item[5.] 2\power3\power4 → 2\power(3\power4) \par
+  \item[6.] Praat calculator results: \par
+  34+5e20-5e20 = 0 \newline
+  34+5e18-5e18 = 0 \newline
+  34+5e16-5e16 = 32 \par
+  This is because the calculator considers a number like 34 to be small enough compared to 5e18 or 5e20 to be approximated to 0. For 5e16, it results with the closest factor (3 numbers before odd factors, 4 numbers before even factors) of 8.
+\end{enumerate}
+% //////////////////////////////////////////////////////
+
+% \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+\subsection*{\emph{b. Arithmatic computations with variables in the script window}}
+\vspace{10pt}
+
+\begin{enumerate}
+  \item[1.] a = 2, b = 3 \par
+  \item[2.] a = 3, b = 3 \par
+  \item[3.] a = 6, b = 3 \par
+%_______________________________________
+  \item[4.] 
+  Script:
+  \begin{spverbatim}
+    a = 1
+    b = 0
+    c = a + b
+    writeInfoLine: a, " + ", b, " = ", c
+  \end{spverbatim} \par
+  Info window:
+  \begin{spverbatim}
+    1 + 0 = 1
+  \end{spverbatim} \newpage
+%_______________________________________
+  \item[5.] 
+  Script:
+  \begin{spverbatim}
+    a = 4
+    b = 0
+    c = a / b
+    writeInfoLine: a, " / ", b, " = ", c
+  \end{spverbatim}\par
+  Info window:
+  \begin{spverbatim}
+    4 / 0 = --undefined--
+  \end{spverbatim}
+%_______________________________________
+  \item[6.] Script:
+  \begin{spverbatim}
+    Create Sound as pute tone: "tone", 1, 0, 0.3, 44100, 440,
+    0.35, 0.01, 0.01
+    Play
+    Remove
+  \end{spverbatim}
+%_______________________________________
+  \item[7.] Script:
+  \begin{spverbatim}
+    Create Sound as pure tone: "tone1", 1, 0, 0.3, 44100,
+    440, 0.35, 0.01, 0.01
+    Create Sound as pure tone: "tone2", 1, 0, 0.3, 44100,
+    880, 0.35, 0.01, 0.01
+    plusObject: "Sound tone1"
+    Play
+    Remove
+  \end{spverbatim}
+%_______________________________________
+  \item[8.] Script:
+  \begin{spverbatim}
+    f = 175
+    Create Sound as pure tone: "tone1", 1, 0, 0.3, 44100, f,
+    0.35, 0.01, 0.01
+    Create Sound as pure tone: "tone2", 1, 0, 0.3, 44100, 2*f,
+    0.35, 0.01, 0.01
+    plusObject: "Sound tone1"
+    Play
+    Remove
+  \end{spverbatim}
+%_______________________________________
+\end{enumerate}
+% \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+% ><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+\subsection*{\emph{c1. The general research question of your experiment}}
+\vspace{10pt}
+
+\begin{itemize}
+    \item Anything else you can think of: \par
+    Location of phoneme boundary as a function of orthographic context (and exopure/familiarity with orthography of certain language(s))
+\end{itemize}
+% ><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+
+%wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+\end{document}

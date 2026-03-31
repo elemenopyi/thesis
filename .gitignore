@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Virtual environment (if placed inside repo)
+venv/
+
+# Data (if large, better not commit)
+data/*.wav
+data/*.csv
+!data/README.md   # optionally keep a README explaining data sources
+
+# IDE files
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
