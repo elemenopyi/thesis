@@ -1,4 +1,4 @@
-# Stop Perception gradiency LSTM modelling
+# Stop Perception gradiency modelling
 
 ## Overview
 The study investigates how an LSTM models human gradient ratings and interpret cue importance
