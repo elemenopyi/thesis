@@ -9,6 +9,9 @@ venv/
 dist/
 build/
 
+# Document
+document/specialisation/
+
 # Virtual environment (if placed inside repo)
 venv/
 
